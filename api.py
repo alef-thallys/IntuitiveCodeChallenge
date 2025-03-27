@@ -21,12 +21,15 @@ engine = create_engine(DATABASE_URL)
 
 @app.route('/buscar', methods=['GET'])
 def buscar_operadoras():
+    print("Received request to /buscar endpoint.")
     query = request.args.get('q', '').lower()
 
     if not query:
+        print("No search parameter provided.")
         return jsonify({"error": "Parâmetro de busca não informado"}), 400
 
     try:
+        print(f"Searching for operadoras with query: {query}")
         with engine.connect() as conn:
             sql = text("""
                 SELECT * FROM operadoras_ativas 
@@ -35,13 +38,17 @@ def buscar_operadoras():
             """)
             result = conn.execute(sql, {"query": f"%{query}%"})
             
-            columns = result.keys()  
-            operadoras = [dict(zip(columns, row)) for row in result.fetchall()] 
+            columns = result.keys()
+            operadoras = [dict(zip(columns, row)) for row in result.fetchall()]
 
+        print(f"Found {len(operadoras)} results for query: {query}")
         return jsonify(operadoras)
 
     except Exception as e:
+        print(f"Error while processing /buscar request: {e}")
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
+    print("Starting API server...")
     app.run(debug=True, host='0.0.0.0', port=5000)
+    print("API server is running on http://0.0.0.0:5000")
