@@ -7,6 +7,9 @@ import shutil
 
 url = "https://www.gov.br/ans/pt-br/acesso-a-informacao/participacao-da-sociedade/atualizacao-do-rol-de-procedimentos"
 
+ZIP_DIR = "anexos"
+ZIP_PATH = os.path.join(ZIP_DIR, "anexos.zip")
+
 def scrape_pdfs(url):
     print(f"Iniciando o scraping na URL: {url}")
     response = requests.get(url)
@@ -27,7 +30,7 @@ def scrape_pdfs(url):
     return pdf_links
 
 def download_file(url, dest_folder):
-    local_filename = os.path.join(dest_folder, url.split('/')[-1])
+    local_filename = os.path.join(dest_folder, os.path.basename(url))
     print(f"Baixando o arquivo: {url}")
     with requests.get(url, stream=True) as r:
         r.raise_for_status()
@@ -39,6 +42,8 @@ def download_file(url, dest_folder):
     return local_filename
 
 def create_zip(files, zip_filename):
+    os.makedirs(os.path.dirname(zip_filename), exist_ok=True)
+
     print(f"Iniciando a compactação dos arquivos em: {zip_filename}")
     with zipfile.ZipFile(zip_filename, 'w') as zipf:
         for file in files:
@@ -69,13 +74,12 @@ def main():
             local_file = download_file(pdf_url, temp_dir)
             downloaded_files.append(local_file)
 
-        zip_filename = "anexos.zip"
-        create_zip(downloaded_files, zip_filename)
+        create_zip(downloaded_files, ZIP_PATH)
     finally:
         print("Removendo arquivos temporários.")
         for file in downloaded_files:
             os.remove(file)
-        os.rmdir(temp_dir)
+        shutil.rmtree(temp_dir, ignore_errors=True) 
         print("Arquivos temporários removidos.")
 
 if __name__ == "__main__":

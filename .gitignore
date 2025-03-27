@@ -8,6 +8,7 @@ node_modules/
 # Diretórios específicos do projeto
 demonstracoes_contabeis/
 operadoras_ativas/
+anexos/
 
 # Arquivos ZIP
 *.zip

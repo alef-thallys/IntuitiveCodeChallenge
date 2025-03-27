@@ -52,7 +52,7 @@ def limpar_temp_dir(diretorio):
         print(f"Diretório temporário {diretorio} limpo.")
 
 def main():
-    zip_path = "anexos.zip"
+    zip_path = "anexos/anexos.zip"
     pdf_filename = "Anexo_I_Rol_2021RN_465.2021_RN627L.2024.pdf"
     temp_dir = tempfile.mkdtemp()
     limpar_temp_dir(temp_dir)  

@@ -10,7 +10,6 @@
     </ul>
     <p v-else>Nenhuma operadora encontrada.</p>
 
-    <!-- Se uma operadora for selecionada, exibe os detalhes -->
     <div v-if="operadoraSelecionada" class="detalhes">
       <h3>Detalhes da Operadora</h3>
       <p><strong>Razão Social:</strong> {{ operadoraSelecionada.razao_social }}</p>
@@ -23,7 +22,6 @@
       <p><strong>Bairro:</strong> {{ operadoraSelecionada.bairro }}</p>
       <p><strong>Número:</strong> {{ operadoraSelecionada.numero }}</p>
       <p><strong>Email:</strong> {{ operadoraSelecionada.endereco_eletronico }}</p>
-      <!-- Adicione mais campos conforme necessário -->
     </div>
   </div>
 </template>
@@ -36,7 +34,7 @@ export default {
     return {
       query: '',
       operadoras: [],
-      operadoraSelecionada: null  // Armazenará a operadora clicada
+      operadoraSelecionada: null 
     };
   },
   methods: {
@@ -49,13 +47,13 @@ export default {
       try {
         const response = await axios.get(`http://localhost:5000/buscar?q=${this.query}`);
         this.operadoras = response.data;
-        this.operadoraSelecionada = null; // Limpa a seleção quando nova busca é feita
+        this.operadoraSelecionada = null; 
       } catch (error) {
         console.error("Erro ao buscar operadoras:", error);
       }
     },
     verDetalhes(operadora) {
-      this.operadoraSelecionada = operadora;  // Armazena a operadora clicada para exibir os detalhes
+      this.operadoraSelecionada = operadora;  
     }
   }
 };
