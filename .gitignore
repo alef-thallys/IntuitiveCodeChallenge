@@ -11,3 +11,6 @@ operadoras_ativas/
 
 # Arquivos ZIP
 *.zip
+
+# .env
+.env

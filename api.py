@@ -1,18 +1,22 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from sqlalchemy import create_engine, text
+from dotenv import load_dotenv
+import os
 
 app = Flask(__name__)
+load_dotenv()
 CORS(app) 
 
-DB_USER = "root"
-DB_PASSWORD = "87249293a"
-DB_HOST = "127.0.0.1"
-DB_PORT = "3306" 
-DB_NAME = "intuitiveChallenge"
+db_config = {
+    "DB_USER": os.getenv("DB_USER"),
+    "DB_PASSWORD": os.getenv("DB_PASSWORD"),
+    "DB_HOST": os.getenv("DB_HOST"),
+    "DB_PORT": os.getenv("DB_PORT"),
+    "DB_NAME": os.getenv("DB_NAME"),
+}
 
-DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-
+DATABASE_URL = f"mysql+pymysql://{db_config['DB_USER']}:{db_config['DB_PASSWORD']}@{db_config['DB_HOST']}:{db_config['DB_PORT']}/{db_config['DB_NAME']}"
 engine = create_engine(DATABASE_URL)
 
 @app.route('/buscar', methods=['GET'])

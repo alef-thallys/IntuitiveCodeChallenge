@@ -7,3 +7,4 @@ flask
 flask-cors
 sqlalchemy
 pymysql
+python-dotenv
