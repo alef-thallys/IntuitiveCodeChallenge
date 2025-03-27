@@ -1,0 +1,13 @@
+# Diretórios de ambiente virtual e configuração do VS Code
+.venv/
+.vscode/
+
+# Dependências do Node.js
+node_modules/
+
+# Diretórios específicos do projeto
+demonstracoes_contabeis/
+operadoras_ativas/
+
+# Arquivos ZIP
+*.zip
